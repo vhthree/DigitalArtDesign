@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>大鱼吃小鱼</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			overflow: hidden;
+		}
+
+		canvas {
+			background: url(pictures/game/bg.jpg)no-repeat center;
+			background-size: cover;
+		}
+	</style>
+</head>
+
+<body>
+	<canvas id="can"></canvas>
+	<script>
+		var flag = 1;
+		var flag1 = 1;
+		var flag2 = 1;
+		var flag3 = 1;
+		var maxFishSize = 260;
+		var obj = document.getElementById("can"),
+			hb = obj.getContext("2d"),
+			h = obj.height = window.innerHeight,
+			w = obj.width = window.innerWidth,
+			my = {
+				img: [
+					createImage('pictures/game/me.png'),
+					createImage('pictures/game/me_1.png')
+				],
+				x: 0,
+				y: 0,
+				sw: 50,
+				sh: 25,
+				endx: 0,
+				endy: 0,
+				lift: 0
+			},
+			arr = [],
+			maxD = 15,//定义 最大15条鱼
+			Dsmall = [
+				'pictures/game/small_1.png',
+				'pictures/game/small_2.png',
+				'pictures/game/small_3.png',
+				'pictures/game/small_4.png',
+				'pictures/game/small_5.png',
+				'pictures/game/z_1.png',
+				'pictures/game/z_2.png',
+				'pictures/game/z_3.png',
+				'pictures/game/z_4.png',
+				'pictures/game/z_5.png',
+				'pictures/game/big_1.png',
+				'pictures/game/big_2.png',
+				'pictures/game/big_3.png',
+			]
+
+		//设置随机数
+		function random(max, min) {
+			return Math.random(max - min) + min;
+		}
+
+		//构造函数，创建所有敌人的鱼
+		function creatfoot() {
+		}
+
+		creatfoot.prototype = {
+			int: function () {//敌人鱼的初始化参数
+				var num = Math.floor(Math.random() * Dsmall.length);
+				switch (num) {
+					case 0://小虾米
+						this.src = createImage(Dsmall[0]);
+						this.w = 20;
+						this.h = 10;
+						this.sd = 1;
+						this.lift = 11;
+						break;
+					case 1://小鱼一级
+						this.src = createImage(Dsmall[1]);
+						this.w = 24;
+						this.h = 12;
+						this.sd = 1.2;
+						this.lift = 10;
+						break;
+					case 2://小鱼二级
+						this.src = createImage(Dsmall[2]);
+						this.w = 28;
+						this.h = 14;
+						this.sd = 1.3;
+						this.lift = 10;
+						break;
+					case 3://小鱼三级
+						this.src = createImage(Dsmall[3]);
+						this.w = 30;
+						this.h = 16;
+						this.sd = 1.35;
+						this.lift = 4;
+						break;
+					case 4://小鱼四级
+						this.src = createImage(Dsmall[4]);
+						this.w = 34;
+						this.h = 17;
+						this.sd = 0.9;
+						this.lift = 5;
+						break;
+					case 5://中鱼一级
+						this.src = createImage(Dsmall[5]);
+						this.w = 40;
+						this.h = 22;
+						this.sd = 0.65;
+						this.lift = 10;
+						break;
+					case 6://中鱼二级
+						this.src = createImage(Dsmall[6]);
+						this.w = 46;
+						this.h = 25;
+						this.sd = 0.82;
+						this.lift = 12;
+						break;
+					case 7://中鱼三级
+						this.src = createImage(Dsmall[7]);
+						this.w = 55;
+						this.h = 29;
+						this.sd = 1.5;
+						this.lift = 16;
+						break;
+					case 8://中鱼四级
+						this.src = createImage(Dsmall[8]);
+						this.w = 62;
+						this.h = 33;
+						this.sd = 1.22;
+						this.lift = 18;
+						break;
+					case 9://中鱼五级
+						this.src = createImage(Dsmall[9]);
+						this.w = 70;
+						this.h = 40;
+						this.sd = 0.85;
+						this.lift = 20;
+						break;
+					case 10://大鱼一级
+						this.src = createImage(Dsmall[10]);
+						this.w = 120;
+						this.h = 70;
+						this.sd = 1.44;
+						this.lift = 25;
+						break;
+					case 11://大鱼二级
+						this.src = createImage(Dsmall[11]);
+						this.w = 150;
+						this.h = 150;
+						this.sd = 0.8;
+						this.lift = 50;
+						break;
+					case 12://大鱼三级
+						this.src = createImage(Dsmall[12]);
+						this.w = 230;
+						this.h = 160;
+						this.sd = 1.3;
+						this.lift = 100;
+						break;
+				}
+				this.x = getFx('x', -this.w);
+				this.y = getFx('y');
+				this.sdx = this.x <= this.w ? Math.random() * (this.sd - 0.5) + 0.5 : Math.random() * -(this.sd - 0.5) - 0.5;
+				this.sdy = this.y < h / 2 - 100 ? Math.random() * (this.sd - 0.5) : Math.random() * -(this.sd - 0.5);
+			},
+			draw: function () {
+				this.x += this.sdx;
+				this.y += this.sdy;
+				if (this.x >= my.x && this.x + this.w <= my.x + my.sw && this.y >= my.y && this.y + this.h <= my.y + my.sh) {
+					my.lift += this.lift;
+					this.int();
+				}
+				this.pengzhuang();
+				hb.drawImage(this.src, this.x, this.y, this.w, this.h);
+			},
+			pengzhuang: function () {
+				if (flag == 1
+				) {
+					// Game over logic
+					alert("提示：\n你是一条鱼，居住的水域被海洋垃圾污染了。\n吃掉比你小的垃圾可以长大并暂时延长生命。\n带有红框的生物会给你带来不可预知的后果。\n请你努力活下去！！！");
+					flag = 0;
+					// You can add additional game over actions here, such as stopping the game or displaying a game over screen
+				}
+				if (this.x <= my.x + my.sw &&
+					this.x + this.w >= my.x &&
+					this.y <= my.y + my.sh &&
+					this.y + this.h >= my.y &&
+					this.h === 150 && flag3 == 1
+				) {
+					// Game over logic
+					alert("你遇到了正在垃圾堆中寻找食材的海绵宝宝，你被他作为食材杀掉了。\n\n海绵宝宝将你做成了蟹黄堡的肉饼，由于你的体内有太多重金属和毒素，比奇堡的居民吃了蟹堡后全都生病了。");
+					alert("游戏结束，你输了。");
+					flag3 = 0;
+					// You can add additional game over actions here, such as stopping the game or displaying a game over screen
+				}
+				if (this.x <= my.x + my.sw &&
+					this.x + this.w >= my.x &&
+					this.y <= my.y + my.sh &&
+					this.y + this.h >= my.y &&
+					this.h === 160 && flag2 == 1
+				) {
+					// Game over logic
+					alert("你遇到了正在拯救环境的潜水员，他帮你清除了体内的垃圾，并将你带离了这片被垃圾污染的水域。");
+					alert("游戏结束，你胜利了！");
+					flag2 = 0;
+					// You can add additional game over actions here, such as stopping the game or displaying a game over screen
+				}
+				if (my.lift >= maxFishSize && flag1 == 1) {
+					flag1 = 0;
+					alert("你吃了太多的垃圾，你的胃已经被塑料塞满了，你因为无法进食死去了。");
+					alert("游戏结束，你输了。");
+				}
+				// 在这里可以添加自定义的弹窗样式和逻辑
+				if (this.x > w || this.x < -this.w) {
+					this.int();
+				}
+
+			}
+		}
+
+
+		function Dyd() {
+			for (x in arr) {
+				arr[x].draw();
+			}
+		}
+
+		//刚出来的敌人鱼的坐标
+		function getFx(a, b) {
+			if (a == 'x') {
+				var arr1 = [b, w];
+				return arr1[Math.floor(Math.random() * 2)];
+			} else {
+				return Math.random() * h;
+			}
+		}
+
+		//创建图片对象的方法
+		function createImage(src) {
+			var o = new Image();
+			o.src = src;
+			return o;
+		}
+
+		//自己鱼的方法
+		function chi() {
+			if (my.lift >= 10 && my.lift < 50) {
+				my.sw = 70;
+				my.sh = 35;
+			} else if (my.lift >= 50 && my.lift < 100) {
+				my.sw = 100;
+				my.sh = 50;
+			} else if (my.lift >= 100 && my.lift < 200) {
+				my.sw = 120;
+				my.sh = 60;
+			} else if (my.lift >= 200 && my.lift < 300) {
+				my.sw = 150;
+				my.sh = 75;
+			} else if (my.lift >= 300 && my.lift < 400) {
+				my.sw = 200;
+				my.sh = 100;
+			} else if (my.lift >= 400 && my.lift < 500) {
+				my.sw = 250;
+				my.sh = 125;
+			}
+		}
+
+		//自己鱼移动的方法
+		document.addEventListener('mousemove', function (e) {
+			my.endx = e.clientX;
+			my.endy = e.clientY;
+		}, false)
+
+		//每个敌人鱼对象的方法
+		window.onload = function () {
+			for (var i = 0; i < maxD; i++) {
+				(function (j) {
+					setTimeout(function () {
+						var o = new creatfoot();
+						o.int();
+						arr.push(o);
+					}, 500 * j)
+				})(i)
+			}
+			//console.log(arr)
+		}
+
+		var timer = setInterval(function () {
+			hb.clearRect(0, 0, w, h);
+			my.x += (my.endx - my.x) / 30;
+			my.y += (my.endy - my.y) / 30;
+			my.x = Math.min(my.x, w - my.sw);//不超出屏幕宽度 
+			my.y = Math.min(my.y, h - my.sh);//不超出屏幕高度 
+			Dyd()
+			chi()
+			if (my.endx - my.x > 0) {
+				hb.drawImage(my.img[1], my.x, my.y, my.sw, my.sh);//向右走
+			} else {
+				hb.drawImage(my.img[0], my.x, my.y, my.sw, my.sh);//向左走			
+			}
+			//			if((my.x + my.sw) > w){//不超出屏幕宽度  
+			//				my.x = w - my.sw;
+			//			}
+			//			if((my.y + my.sh) > h){//不超出屏幕高度 
+			//				my.y = h - my.sh;
+			//			}
+		}, 20)
+
+
+	</script>
+
+</body>
+
+
+</html>
