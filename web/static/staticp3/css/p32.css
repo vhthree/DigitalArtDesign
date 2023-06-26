@@ -1,0 +1,75 @@
+
+
+body{
+    background-color: rgb(28,45,82);
+    margin-top: 10%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 1%;
+
+        
+
+}
+
+
+
+
+
+
+.card {
+	margin:15px 5px;
+}
+.card h1{
+
+    font-weight:bold;
+	font-size:30px;
+}
+
+.card h2{ /*“使用建议”中的二级标题*/
+	font-weight:bold; 
+    font-size:18px;
+}
+
+#top-card div{
+    margin: auto;
+}
+
+#Intro{
+    margin:auto; 
+}
+#top-card{
+    margin-bottom: 5%;
+}
+#Intro div{
+    border: 0px;
+    color: aliceblue;
+    font-size: 24px;
+    line-height: 150%;
+    background-color: rgba(240, 248, 255, 0);
+    
+}
+
+.col-md-6 div{
+    color: black;
+    background-color:white;
+}
+
+
+.col-md-4 div{
+    color: rgb(0, 0, 0);
+    background-color:white;
+}
+
+#blackcard{
+    color:aliceblue;
+    background-color: rgb(0, 128, 255);
+}
+
+
+#maintitel{
+    font-family: 黑体;
+    font-size: 36px;
+    line-height: 150%;
+    font-weight:bold;
+    
+}

@@ -1,0 +1,27 @@
+body {
+	background-attachment: fixed;
+}
+
+#main {
+	/*主内容块*/
+	margin: 7% auto;
+	width: 90%;
+	position: relative;
+	/*留出顶部导航条的位置*/
+}
+.carousel-inner img{
+	width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

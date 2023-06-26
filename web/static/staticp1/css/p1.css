@@ -1,0 +1,174 @@
+
+
+.container1{
+    /* padding: 0 40px; */
+
+    width: 90%;
+    margin: 5% auto;
+    display: flex;
+    align-items: center;
+
+}
+
+.container2{
+    /* padding: 0 40px; */
+
+    width: 100%;
+    margin: 5% auto;
+    display: flex;
+    align-items: center;
+
+}
+
+
+.box{
+    opacity: 0.7;
+}
+.box:hover{
+    opacity: 0.93;
+}
+.box{
+    
+    position: relative;
+    width: 350px;
+    height: 400px;
+    margin: 0 3%;
+}
+.box .imgBx{
+    border-radius: 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.box .imgBx img{
+    border-radius: 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.5s;
+    
+}
+.box:hover .imgBx img{
+    opacity: 0;
+}
+.box .Text{
+    text-align: center;
+    border-radius: 15px;
+    position: absolute;
+    bottom: 20px;
+    left: 10%;
+    width: 80%;
+    height: 65px;
+    background-color: white;
+    transition: 0.5s;
+    overflow: hidden;
+    padding: 3px;
+    box-sizing: border-box;
+}
+.box:hover .Text{
+
+    border-radius: 15px;
+    height: 100%;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+}
+.box .Text h1{
+    margin: 0;
+    padding: 0;
+
+}
+.box .Text p{
+    font-size: 20px;
+    margin: 15px 0 0;
+    padding: 30px;
+    opacity: 0;
+    line-height: 1.2em;
+    transition: 0.5s;
+
+}
+.box:hover .Text p{
+    opacity: 1;
+    transition-delay: 0.5s;
+}
+
+.box2{
+    opacity: 0.7;
+}
+.box2:hover{
+    opacity: 0.93;
+}
+
+.box2{
+
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin: 0 3%;
+}
+.box2 .imgBx{
+    border-radius: 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.box2 .imgBx img{
+    border-radius: 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.5s;
+
+}
+.box2:hover .imgBx img{
+    opacity: 0;
+}
+.box2 .Text{
+    text-align: center;
+    border-radius: 15px;
+    position: absolute;
+    bottom: 20px;
+    left: 10%;
+    width: 80%;
+    height: 65px;
+    background-color: white;
+    transition: 0.5s;
+    overflow: hidden;
+    padding: 3px;
+    box-sizing: border-box;
+}
+.box2:hover .Text{
+    border-radius: 15px;
+    height: 100%;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+}
+.box2 .Text h1{
+    margin: 0;
+    padding: 0;
+
+}
+.box2 .Text p{
+    font-size: 20px;
+    margin:  0 0;
+    padding: 10px;
+    opacity: 0;
+    line-height: 1.2em;
+    transition: 0.5s;
+
+}
+.box2:hover .Text p{
+    opacity: 1;
+    transition-delay: 0.5s;
+}
